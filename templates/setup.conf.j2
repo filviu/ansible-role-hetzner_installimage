@@ -1,0 +1,25 @@
+{% if hetzner_installimage_cryptpassword is defined and hetzner_installimage_cryptpassword|length %}
+CRYPTPASSWORD {{ hetzner_installimage_cryptpassword }}
+{% endif %}
+
+{% for disk in hetzner_installimage_disks %}
+DRIVE{{ loop.index }} {{ disk }}
+{% endfor %}
+
+SWRAID {{ hetzner_installimage_swraid }}
+SWRAIDLEVEL {{ hetzner_installimage_swraidlevel }}
+
+BOOTLOADER grub
+
+HOSTNAME {{ hetzner_installimage_hostname }}
+
+PART swap swap 32G
+PART /boot ext4 1G
+{% if hetzner_installimage_cryptpassword is defined and hetzner_installimage_cryptpassword|length %}
+PART /     ext4 all crypt
+{% else %}
+PART /     ext4 all
+{% endif %}
+
+IMAGE {{ hetzner_installimage_image }}
+SSHKEYS_URL /tmp/authorized_keys

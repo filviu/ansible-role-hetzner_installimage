@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  role_name: hetzner_installimage
+  author: silviuvulcan
+  description: Hetzner Installimage Setup. Encryption supported.
+  license: "license (BSD, MIT)"
+
+  min_ansible_version: 2.7
+
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+        - bullseye
+
+  galaxy_tags:
+    - hetzner
+    - server
+    - encryption
+
+dependencies: []

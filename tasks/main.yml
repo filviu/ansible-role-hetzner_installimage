@@ -1,0 +1,61 @@
+---
+
+- name: setup | setup.conf
+  template:
+    src: setup.conf.j2
+    dest: "/tmp/setup.conf"
+    force: yes
+    owner: "root"
+    mode: 0644
+
+- name: setup | authorized_keys with existing keys
+  copy:
+    src: "/root/.ssh/authorized_keys"
+    dest: "/tmp/authorized_keys"
+    owner: "root"
+    mode: 0644
+    remote_src: yes
+  when: hetzner_installimage_sshkeys is not defined
+
+- name: setup | authorized_keys with provided keys
+  ansible.posix.authorized_key:
+    user: root
+    state: present
+    key: "{{ item }}"
+    path: "/tmp/authorized_keys"
+  loop: "{{ hetzner_installimage_sshkeys|default([]) }}"
+  when: hetzner_installimage_sshkeys | length > 0
+
+- name: setup | authorized_keys with existing keys
+  copy:
+    src: "post-install.sh"
+    dest: "/tmp/post-install.sh"
+    owner: "root"
+    mode: 0755
+
+- name: debug | notify that installimage is runing 
+  debug:
+    msg: "Running installimage. This will take a while, you can monitor /root/debug.txt on remote."
+
+- name: shell | running installimage
+  ansible.builtin.command:
+    cmd: "/root/.oldroot/nfs/install/installimage -a -c /tmp/setup.conf -x /tmp/post-install.sh"
+  register: "installimage_result"
+  changed_when: installimage_result.rc != 0
+
+- name: debug | output installimage results
+  debug:
+   var: installimage_result.stdout
+
+- name: system | rebooting remote
+  reboot:
+
+- name: setup | remove server from local known_hosts file
+  known_hosts:
+    name: "{{ ansible_host }}"
+    state: absent
+  delegate_to: localhost
+
+- name: system | unlocking partition
+  raw: "echo -ne {{ hetzner_installimage_cryptpassword|quote }} > /lib/cryptsetup/passfifo"
+  when: (hetzner_installimage_cryptpassword is defined) and (hetzner_installimage_cryptpassword|length > 0)

@@ -1,0 +1,20 @@
+---
+# if the password is empty then encryption will not be setup
+hetzner_installimage_cryptpassword: "password"
+
+hetzner_installimage_disks:
+  - "/dev/nvme0n1"
+  - "/dev/nvme1n1"
+
+hetzner_installimage_swraid: 1
+hetzner_installimage_swraidlevel: 1
+
+hetzner_installimage_hostname: "custom"
+
+hetzner_installimage_image: "/root/images/Debian-1010-buster-64-minimal.tar.gz"
+
+# list of public ssh keys allowed to login into the BusyBox environment to enter the encryption password and boot the server
+# if not defined the keys used when enabling the rescue environment (or ordering the machine if new) are used
+#
+#hetzner_installimage_sshkeys: 
+#  - "key1"

@@ -3,7 +3,7 @@
 Set-up a Hetzner Dedicated Server with a chosen distribution and potentially full disk encryption.
 
 
-[![CI](https://github.com/silviuvulcan/ansible-role-ansible-role-hetzner_installimage/workflows/CI/badge.svg?event=push)](https://github.com/silviuvulcan/ansible-role-ansible-role-hetzner_installimage/actions?query=workflow%3ACI)
+[![CI](https://github.com/silviuvulcan/ansible-role-hetzner_installimage/workflows/CI/badge.svg?event=push)](https://github.com/silviuvulcan/ansible-role-hetzner_installimage/actions?query=workflow%3ACI)
 
 ## Warnings
 

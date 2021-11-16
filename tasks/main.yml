@@ -47,14 +47,15 @@
   debug:
    var: installimage_result.stdout
 
-- name: system | rebooting remote
-  reboot:
-
 - name: setup | remove server from local known_hosts file
   known_hosts:
     name: "{{ ansible_host }}"
     state: absent
   delegate_to: localhost
+
+- name: system | rebooting remote
+  reboot:
+    connect_timeout: 60
 
 - name: system | unlocking partition
   raw: "echo -ne {{ hetzner_installimage_cryptpassword|quote }} > /lib/cryptsetup/passfifo"

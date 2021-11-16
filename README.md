@@ -52,9 +52,13 @@ hetzner_installimage_image: "/root/images/Debian-1010-buster-64-minimal.tar.gz"
       hetzner_installimage_image: "/root/images/Debian-1010-buster-64-minimal.tar.gz"
 ```
 
+If you are happy with defaults or you added them to your playbook `hetzner-installimage.yml` you can run something like:
+
 ```
 ansible-playbook -i "1.2.3.4," -u root -e "hetzner_installimage_cryptpassword=MY_SECURE_PASS" hetzner-installimage.yml
 ```
+
+to avoid storing your encryption password (clear bash history) and adding the machine to your inventory. Alternatively you can add the password encrypted in the playbook.
 
 ## Mentions
 
@@ -62,7 +66,7 @@ ansible-playbook -i "1.2.3.4," -u root -e "hetzner_installimage_cryptpassword=MY
 - You either define the ssh keys variable or comment it out. If you define it and it's empty the role will fail or you will not be able to login to boot the server.
 - **No handholding!** be sure you store the password, you use the right SSH keys and that the server is booted into rescue mode and **doesn't contain any data you need**.
 - Only tested with Debian 10 and 11. Should work with Ubuntu too.
-- Debian 10 does not support ED25519 keys!
+- **Debian 10 does not support ED25519 keys!**
 
 ## License
 

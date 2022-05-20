@@ -13,6 +13,9 @@ BOOTLOADER grub
 
 HOSTNAME {{ hetzner_installimage_hostname }}
 
+{% if hetzner_installimage_esp %}
+PART /boot/efi esp 256M
+{% endif %}
 PART swap swap 32G
 PART /boot ext4 1G
 {% if hetzner_installimage_cryptpassword is defined and hetzner_installimage_cryptpassword|length %}

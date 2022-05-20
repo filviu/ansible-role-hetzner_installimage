@@ -28,6 +28,10 @@ hetzner_installimage_disks:
   - "/dev/nvme0n1"
   - "/dev/nvme1n1"
 
+# create EFI partition
+# newer machines like the EX-53 seem to require it
+hetzner_installimage_esp: true
+
 hetzner_installimage_swraid: 1
 hetzner_installimage_swraidlevel: 1
 
@@ -64,6 +68,7 @@ to avoid storing your encryption password (clear bash history) and adding the ma
 
 ## Mentions
 
+- Test that you know how and are able to unlock your server after reboot (i.e. you won't have private vlans enabled in the minimal environment you need to allow port 22 ssh to the public interface from the hetzner robot firewall if you use it, etc.)
 - You don't need to add the server to your ansible inventory.
 - You either define the ssh keys variable or comment it out. If you define it and it's empty the role will fail or you will not be able to login to boot the server.
 - **No handholding!** be sure you store the password, you use the right SSH keys and that the server is booted into rescue mode and **doesn't contain any data you need**.

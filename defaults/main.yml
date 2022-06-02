@@ -15,7 +15,7 @@ hetzner_installimage_swraidlevel: 1
 
 hetzner_installimage_hostname: "custom"
 
-hetzner_installimage_image: "/root/images/Debian-buster-latest-amd64-base.tar.gz"
+hetzner_installimage_image: "/root/images/Debian-bullseye-latest-amd64-base.tar.gz"
 
 # list of public ssh keys allowed to login into the BusyBox environment to enter the encryption password and boot the server
 # if not defined the keys used when enabling the rescue environment (or ordering the machine if new) are used

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: hetzner_installimage
-  author: silviuvulcan
+  author: filviu
   description: Hetzner Installimage Setup. Encryption supported.
   license: "license (BSD, MIT)"
 

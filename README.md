@@ -54,7 +54,7 @@ hetzner_installimage_image: "/root/images/Debian-1010-buster-64-minimal.tar.gz"
 - hosts: all
 
   roles:
-    - role: silviuvulcan.hetzner_installimage
+    - role: filviu.hetzner_installimage
       hetzner_installimage_image: "/root/images/Debian-1010-buster-64-minimal.tar.gz"
 ```
 

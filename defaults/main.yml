@@ -20,5 +20,5 @@ hetzner_installimage_image: "/root/images/Debian-bullseye-latest-amd64-base.tar.
 # list of public ssh keys allowed to login into the BusyBox environment to enter the encryption password and boot the server
 # if not defined the keys used when enabling the rescue environment (or ordering the machine if new) are used
 #
-#hetzner_installimage_sshkeys: 
-#  - "key1"
+# hetzner_installimage_sshkeys:
+#   - "key1"

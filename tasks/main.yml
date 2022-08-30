@@ -1,7 +1,7 @@
 ---
 
 - name: setup | setup.conf
-  template:
+  ansible.builtin.template:
     src: setup.conf.j2
     dest: "/tmp/setup.conf"
     force: yes
@@ -9,7 +9,7 @@
     mode: 0644
 
 - name: setup | authorized_keys with existing keys
-  copy:
+  ansible.builtin.copy:
     src: "/root/.ssh/authorized_keys"
     dest: "/tmp/authorized_keys"
     owner: "root"
@@ -19,22 +19,22 @@
 
 - name: setup | authorized_keys with provided keys
   ansible.posix.authorized_key:
-    user: root
+    ansible.builtin.user: root
     state: present
     key: "{{ item }}"
     path: "/tmp/authorized_keys"
-  loop: "{{ hetzner_installimage_sshkeys|default([]) }}"
+  loop: "{{ hetzner_installimage_sshkeys | default([]) }}"
   when: hetzner_installimage_sshkeys | length > 0
 
 - name: setup | authorized_keys with existing keys
-  copy:
+  ansible.builtin.copy:
     src: "post-install.sh"
     dest: "/tmp/post-install.sh"
     owner: "root"
     mode: 0755
 
-- name: debug | notify that installimage is runing 
-  debug:
+- name: debug | notify that installimage is runing
+  ansible.builtin.debug:
     msg: "Running installimage. This will take a while, you can monitor /root/debug.txt on remote."
 
 - name: shell | running installimage
@@ -44,19 +44,19 @@
   changed_when: installimage_result.rc != 0
 
 - name: debug | output installimage results
-  debug:
-   var: installimage_result.stdout
+  ansible.builtin.debug:
+    var: installimage_result.stdout
 
 - name: system | rebooting remote
-  reboot:
+  ansible.builtin.reboot:
     connect_timeout: 60
 
 - name: setup | remove server from local known_hosts file
-  known_hosts:
+  ansible.builtin.known_hosts:
     name: "{{ ansible_host }}"
     state: absent
   delegate_to: localhost
 
 - name: system | unlocking partition
-  raw: "echo -ne {{ hetzner_installimage_cryptpassword|quote }} > /lib/cryptsetup/passfifo"
+  ansible.builtin.raw: "echo -ne {{ hetzner_installimage_cryptpassword|quote }} > /lib/cryptsetup/passfifo"
   when: (hetzner_installimage_cryptpassword is defined) and (hetzner_installimage_cryptpassword|length > 0)

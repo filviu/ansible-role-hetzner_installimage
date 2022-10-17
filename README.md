@@ -66,6 +66,12 @@ ansible-playbook -i "1.2.3.4," -u root -e "hetzner_installimage_cryptpassword=MY
 
 to avoid storing your encryption password (clear bash history) and adding the machine to your inventory. Alternatively you can add the password encrypted in the playbook.
 
+If you rarely need to setup machines with sata disks instead of the nvme (default) instead of creating a separate playbook you can override the list of disks in the command line:
+
+```bash
+ansible-playbook -i "1.2.3.4," -u root -e "hetzner_installimage_cryptpassword=MY_SECURE_PASS" -e '{"hetzner_installimage_disks":["/dev/sda","/dev/sdb"]}' hetzner-installimage.yml
+```
+
 ## Mentions
 
 - Test that you know how and are able to unlock your server after reboot (i.e. you won't have private vlans enabled in the minimal environment you need to allow port 22 ssh to the public interface from the hetzner robot firewall if you use it, etc.)

@@ -19,7 +19,7 @@
 
 - name: setup | authorized_keys with provided keys
   ansible.posix.authorized_key:
-    ansible.builtin.user: root
+    user: root
     state: present
     key: "{{ item }}"
     path: "/tmp/authorized_keys"
